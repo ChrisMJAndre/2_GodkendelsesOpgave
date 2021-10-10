@@ -1,7 +1,20 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import firebase from "firebase";
+import { View, Text, StyleSheet, Image, Button } from "react-native";
 
 const MyProfile = (props) => {
+  const handleLogOut = async () => {
+    await firebase.auth().signOut();
+  };
+
+  if (!firebase.auth().currentUser) {
+    return (
+      <View>
+        <Text>Not found</Text>
+      </View>
+    );
+  }
+
   return (
     <View>
       <Text> Name: Christopher Maximilian John Andr </Text>
@@ -9,6 +22,10 @@ const MyProfile = (props) => {
       <Text> Mail: Chan19af@student.cbs.dk </Text>
       <Text> Nationality: Sweden/China </Text>
       <Text> Study: Ha(it). </Text>
+      <Text></Text>
+
+      <Text>Current user: {firebase.auth().currentUser.email}</Text>
+      <Button onPress={() => handleLogOut()} title="Log out" />
 
       <Text style={styles.Top}>Notes: </Text>
       <Text style={styles.Top}>
@@ -28,12 +45,15 @@ export default MyProfile;
 
 const styles = StyleSheet.create({
   Image: {
-    top: 100,
+    top: 25,
     width: 200,
     height: 300,
     alignSelf: "center",
   },
   Top: {
-    top: 50,
+    top: 25,
+  },
+  Top2: {
+    top: 0,
   },
 });
