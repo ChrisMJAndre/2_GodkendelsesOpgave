@@ -1,3 +1,4 @@
+// Imports - Chris
 import React from "react";
 import {
   View,
@@ -11,48 +12,49 @@ import {
 import firebase from "firebase";
 import { useEffect, useState } from "react";
 
+// Define the Component functionality- Chris
 const ProfileDetails = ({ route, navigation }) => {
   const [profile, setprofile] = useState({});
 
+  // Fetches the profiles values and set them - Chris
   useEffect(() => {
-    /*Henter profile values og sætter dem*/
     setprofile(route.params.profile[1]);
 
-    /*Når vi forlader screen, tøm object*/
+    // When we leave the view, empty the object - Chris
     return () => {
       setprofile({});
     };
   });
 
+  // We navigate to the editprofile view and send the object with - Chris
   const handleEdit = () => {
-    // Vi navigerer videre til Editprofile skærmen og sender bilen videre med
     const profile = route.params.profile;
     navigation.navigate("EditProfile", { profile });
   };
 
-  // Vi spørger brugeren om han er sikker
+  // We ask the user for confirmation - Chris
   const confirmDelete = () => {
-    /*Er det mobile?*/
+    // which OS is used? in this case we ask if it is mobile - Chris
     if (Platform.OS === "ios" || Platform.OS === "android") {
       Alert.alert("Are you sure?", "Do you want to delete the profile?", [
         { text: "Cancel", style: "cancel" },
-        // Vi bruger this.handleDelete som eventHandler til onPress
+        // If yes, then trigger handleDelete function - Chris
         { text: "Delete", style: "destructive", onPress: () => handleDelete() },
       ]);
     }
   };
 
-  // Vi sletter den aktuelle bil
+  // We Delete the car using firebase methods - Chris
   const handleDelete = () => {
     const id = route.params.profile[0];
     try {
       firebase
         .database()
-        // Vi sætter profilens ID ind i stien
+        // The profiles ID is used - Chris
         .ref(`/profiles/${id}`)
-        // Og fjerner data fra den sti
+        // Remove the data - Chris
         .remove();
-      // Og går tilbage når det er udført
+      // And navigate back- Chris
       navigation.goBack();
     } catch (error) {
       Alert.alert(error.message);
@@ -63,7 +65,7 @@ const ProfileDetails = ({ route, navigation }) => {
     return <Text>No data</Text>;
   }
 
-  //all content
+  //All content rendered - Chris
   return (
     <View style={styles.container}>
       <Button title="Edit" onPress={() => handleEdit()} />
@@ -71,9 +73,9 @@ const ProfileDetails = ({ route, navigation }) => {
       {Object.entries(profile).map((item, index) => {
         return (
           <View style={styles.row} key={index}>
-            {/*Vores profile keys navn*/}
+            {/*Profile key Names* /}
             <Text style={styles.label}>{item[0]} </Text>
-            {/*Vores profile values navne */}
+            {/*Profile value names */}
             <Text style={styles.value}>{item[1]}</Text>
           </View>
         );
@@ -82,8 +84,10 @@ const ProfileDetails = ({ route, navigation }) => {
   );
 };
 
+// Export component - Chris
 export default ProfileDetails;
 
+// Styles - Chris
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "flex-start" },
   row: {

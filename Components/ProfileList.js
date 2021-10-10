@@ -1,3 +1,4 @@
+// Imports - Chris
 import React from "react";
 import {
   View,
@@ -9,9 +10,11 @@ import {
 import firebase from "firebase";
 import { useEffect, useState } from "react";
 
+// Define component - Chris
 const ProfileList = ({ navigation }) => {
   const [profiles, setprofiles] = useState();
 
+  // We snapshot the profiles defined - Chris - read up on what a snapshot is- Chris
   useEffect(() => {
     if (!profiles) {
       firebase
@@ -23,27 +26,27 @@ const ProfileList = ({ navigation }) => {
     }
   }, []);
 
-  // Vi viser ingenting hvis der ikke er data
+  // If there is not profiles then display message - Chris
   if (!profiles) {
     return <Text>Loading... or Database is empty</Text>;
   }
 
+  // We search in the array for profiles and find the profile object that matches the id we sendt with - Chris
   const handleSelectProfile = (id) => {
-    /*Her søger vi direkte i vores array af biler og finder bil objektet som matcher idet vi har tilsendt*/
     const profile = Object.entries(profiles).find(
       (profile) => profile[0] === id /*id*/
     );
     navigation.navigate("ProfileDetails", { profile });
   };
 
-  // Flatlist forventer et array. Derfor tager vi alle values fra vores profile objekt, og bruger som array til listen
+  // Flatlist expects an array. Therefore we take all our values from our profile object and use an array for the list - Chris
   const profileArray = Object.values(profiles);
   const profileKeys = Object.keys(profiles);
 
+  // We use profileKeys to find the ID of the profile and return it as a key - Chris
   return (
     <FlatList
       data={profileArray}
-      // Vi bruger profileKeys til at finde ID på den aktuelle bil og returnerer dette som key, og giver det med som ID til CarListItem
       keyExtractor={(item, index) => profileKeys[index]}
       renderItem={({ item, index }) => {
         return (
@@ -59,8 +62,10 @@ const ProfileList = ({ navigation }) => {
   );
 };
 
+// Export component - Chris
 export default ProfileList;
 
+// Styles - Chris
 const styles = StyleSheet.create({
   container: {
     flex: 1,

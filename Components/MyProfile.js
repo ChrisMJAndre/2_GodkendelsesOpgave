@@ -1,12 +1,14 @@
+// Imports - Chris
 import React from "react";
 import firebase from "firebase";
 import { View, Text, StyleSheet, Image, Button } from "react-native";
 
+// Allows the user to sign out using a predetermined firebase methode - Chris
 const MyProfile = (props) => {
   const handleLogOut = async () => {
     await firebase.auth().signOut();
   };
-
+  // If the user cannot be found in the database, show "not found" - Chris
   if (!firebase.auth().currentUser) {
     return (
       <View>
@@ -14,7 +16,7 @@ const MyProfile = (props) => {
       </View>
     );
   }
-
+  // Returns (hardcoded) data which will be replaced by a more dynamical method later - it should check for the user signed in and render it dynamically - Chris
   return (
     <View>
       <Text> Name: Christopher Maximilian John Andr </Text>
@@ -33,6 +35,7 @@ const MyProfile = (props) => {
         picture, this is just a placehold
       </Text>
 
+      {/* Placeholder for an upload image function - Chris  */}
       <Image
         style={styles.Image}
         source={{ uri: "https://picsum.photos/200/300" }}
@@ -41,8 +44,10 @@ const MyProfile = (props) => {
   );
 };
 
+// Export component - Chris
 export default MyProfile;
 
+// Styles - Chris
 const styles = StyleSheet.create({
   Image: {
     top: 25,
