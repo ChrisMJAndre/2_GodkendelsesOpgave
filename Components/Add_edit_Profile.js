@@ -12,57 +12,61 @@ import {
 import firebase from "firebase";
 import { useEffect, useState } from "react";
 
-const Add_edit_Car = ({ navigation, route }) => {
+const Add_edit_Profile = ({ navigation, route }) => {
   const initialState = {
-    brand: "",
-    model: "",
-    year: "",
-    licensePlate: "",
+    Name: "",
+    Age: "",
+    Mail: "",
+    Nationality: "",
+    Study: "",
+    Reason: "",
   };
 
-  const [newCar, setNewCar] = useState(initialState);
+  const [newProfile, setnewProfile] = useState(initialState);
 
-  const isEditCar = route.name === "Edit Car";
+  const isEditProfile = route.name === "Edit Profile";
 
   useEffect(() => {
-    if (isEditCar) {
-      const car = route.params.car[1];
-      setNewCar(car);
+    if (isEditProfile) {
+      const profile = route.params.profile[1];
+      setnewProfile(profile);
     }
     /*Fjern data, når vi går væk fra screenen*/
     return () => {
-      setNewCar(initialState);
+      setnewProfile(initialState);
     };
   }, []);
 
   const changeTextInput = (name, event) => {
-    setNewCar({ ...newCar, [name]: event });
+    setnewProfile({ ...newProfile, [name]: event });
   };
 
   const handleSave = () => {
-    const { brand, model, year, licensePlate } = newCar;
+    const { Name, Age, Mail, Nationality, Study, Reason } = newProfile;
 
     if (
-      brand.length === 0 ||
-      model.length === 0 ||
-      year.length === 0 ||
-      licensePlate.length === 0
+      Name.length === 0 ||
+      Age.length === 0 ||
+      Mail.length === 0 ||
+      Nationality.length === 0 ||
+      Study.length === 0 ||
+      Reason.length === 0
     ) {
       return Alert.alert("Et af felterne er tomme!");
     }
 
-    if (isEditCar) {
-      const id = route.params.car[0];
+    if (isEditProfile) {
+      const id = route.params.profile[0];
       try {
         firebase
           .database()
-          .ref(`/Cars/${id}`)
+          .ref(`/profiles/${id}`)
           // Vi bruger update, så kun de felter vi angiver, bliver ændret
-          .update({ brand, model, year, licensePlate });
+          .update({ Name, Age, Nationality, Mail, Study, Reason });
         // Når bilen er ændret, går vi tilbage.
         Alert.alert("Din info er nu opdateret");
-        const car = [id, newCar];
-        navigation.navigate("Car Details", { car });
+        const profile = [id, newProfile];
+        navigation.navigate("profile Details", { profile });
       } catch (error) {
         console.log(`Error: ${error.message}`);
       }
@@ -70,10 +74,10 @@ const Add_edit_Car = ({ navigation, route }) => {
       try {
         firebase
           .database()
-          .ref("/Cars/")
-          .push({ brand, model, year, licensePlate });
+          .ref("/profiles/")
+          .push({ Name, Age, Nationality, Mail, Study, Reason });
         Alert.alert(`Saved`);
-        setNewCar(initialState);
+        setnewProfile(initialState);
       } catch (error) {
         console.log(`Error: ${error.message}`);
       }
@@ -88,16 +92,16 @@ const Add_edit_Car = ({ navigation, route }) => {
             <View style={styles.row} key={index}>
               <Text style={styles.label}>{key}</Text>
               <TextInput
-                value={newCar[key]}
+                value={newProfile[key]}
                 onChangeText={(event) => changeTextInput(key, event)}
                 style={styles.input}
               />
             </View>
           );
         })}
-        {/*Hvis vi er inde på edit car, vis save changes i stedet for add car*/}
+        {/*Hvis vi er inde på edit profile, vis save changes i stedet for add profile*/}
         <Button
-          title={isEditCar ? "Save changes" : "Add car"}
+          title={isEditProfile ? "Save changes" : "Add profile"}
           onPress={() => handleSave()}
         />
       </ScrollView>
@@ -105,7 +109,7 @@ const Add_edit_Car = ({ navigation, route }) => {
   );
 };
 
-export default Add_edit_Car;
+export default Add_edit_Profile;
 
 const styles = StyleSheet.create({
   container: {
