@@ -94,9 +94,9 @@ export default function App() {
   const StackNavigation = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name={"Search Profile List"} component={ProfileList} />
-        <Stack.Screen name={"Profile Details"} component={ProfileDetails} />
-        <Stack.Screen name={"Edit Profile"} component={Add_edit_Profile} />
+        <Stack.Screen name={"SearchProfileList"} component={ProfileList} />
+        <Stack.Screen name={"ProfileDetails"} component={ProfileDetails} />
+        <Stack.Screen name={"EditProfile"} component={Add_edit_Profile} />
       </Stack.Navigator>
     );
   };

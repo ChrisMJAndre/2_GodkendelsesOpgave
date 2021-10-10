@@ -33,7 +33,7 @@ const ProfileList = ({ navigation }) => {
     const profile = Object.entries(profiles).find(
       (profile) => profile[0] === id /*id*/
     );
-    navigation.navigate("Profile Details", { profile });
+    navigation.navigate("ProfileDetails", { profile });
   };
 
   // Flatlist forventer et array. Derfor tager vi alle values fra vores profile objekt, og bruger som array til listen

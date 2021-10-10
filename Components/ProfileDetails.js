@@ -27,7 +27,7 @@ const ProfileDetails = ({ route, navigation }) => {
   const handleEdit = () => {
     // Vi navigerer videre til Editprofile skærmen og sender bilen videre med
     const profile = route.params.profile;
-    navigation.navigate("Edit profile", { profile });
+    navigation.navigate("EditProfile", { profile });
   };
 
   // Vi spørger brugeren om han er sikker

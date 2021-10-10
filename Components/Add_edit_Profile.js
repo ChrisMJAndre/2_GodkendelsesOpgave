@@ -24,7 +24,7 @@ const Add_edit_Profile = ({ navigation, route }) => {
 
   const [newProfile, setnewProfile] = useState(initialState);
 
-  const isEditProfile = route.name === "Edit Profile";
+  const isEditProfile = route.name === "EditProfile";
 
   useEffect(() => {
     if (isEditProfile) {
@@ -62,11 +62,11 @@ const Add_edit_Profile = ({ navigation, route }) => {
           .database()
           .ref(`/profiles/${id}`)
           // Vi bruger update, så kun de felter vi angiver, bliver ændret
-          .update({ Name, Age, Nationality, Mail, Study, Reason });
+          .update({ Name, Age, Mail, Nationality, Study, Reason });
         // Når bilen er ændret, går vi tilbage.
         Alert.alert("Din info er nu opdateret");
         const profile = [id, newProfile];
-        navigation.navigate("profile Details", { profile });
+        navigation.navigate("profileDetails", { profile });
       } catch (error) {
         console.log(`Error: ${error.message}`);
       }
@@ -75,7 +75,7 @@ const Add_edit_Profile = ({ navigation, route }) => {
         firebase
           .database()
           .ref("/profiles/")
-          .push({ Name, Age, Nationality, Mail, Study, Reason });
+          .push({ Name, Age, Mail, Nationality, Study, Reason });
         Alert.alert(`Saved`);
         setnewProfile(initialState);
       } catch (error) {
