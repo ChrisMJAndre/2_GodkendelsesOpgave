@@ -11,30 +11,30 @@ import {
 import firebase from "firebase";
 import { useEffect, useState } from "react";
 
-const CarDetails = ({ route, navigation }) => {
-  const [car, setCar] = useState({});
+const ProfileDetails = ({ route, navigation }) => {
+  const [profile, setprofile] = useState({});
 
   useEffect(() => {
-    /*Henter car values og sætter dem*/
-    setCar(route.params.car[1]);
+    /*Henter profile values og sætter dem*/
+    setprofile(route.params.profile[1]);
 
     /*Når vi forlader screen, tøm object*/
     return () => {
-      setCar({});
+      setprofile({});
     };
   });
 
   const handleEdit = () => {
-    // Vi navigerer videre til EditCar skærmen og sender bilen videre med
-    const car = route.params.car;
-    navigation.navigate("Edit Car", { car });
+    // Vi navigerer videre til Editprofile skærmen og sender bilen videre med
+    const profile = route.params.profile;
+    navigation.navigate("Edit profile", { profile });
   };
 
   // Vi spørger brugeren om han er sikker
   const confirmDelete = () => {
     /*Er det mobile?*/
     if (Platform.OS === "ios" || Platform.OS === "android") {
-      Alert.alert("Are you sure?", "Do you want to delete the car?", [
+      Alert.alert("Are you sure?", "Do you want to delete the profile?", [
         { text: "Cancel", style: "cancel" },
         // Vi bruger this.handleDelete som eventHandler til onPress
         { text: "Delete", style: "destructive", onPress: () => handleDelete() },
@@ -44,12 +44,12 @@ const CarDetails = ({ route, navigation }) => {
 
   // Vi sletter den aktuelle bil
   const handleDelete = () => {
-    const id = route.params.car[0];
+    const id = route.params.profile[0];
     try {
       firebase
         .database()
-        // Vi sætter bilens ID ind i stien
-        .ref(`/Cars/${id}`)
+        // Vi sætter profilens ID ind i stien
+        .ref(`/profiles/${id}`)
         // Og fjerner data fra den sti
         .remove();
       // Og går tilbage når det er udført
@@ -59,7 +59,7 @@ const CarDetails = ({ route, navigation }) => {
     }
   };
 
-  if (!car) {
+  if (!profile) {
     return <Text>No data</Text>;
   }
 
@@ -68,12 +68,12 @@ const CarDetails = ({ route, navigation }) => {
     <View style={styles.container}>
       <Button title="Edit" onPress={() => handleEdit()} />
       <Button title="Delete" onPress={() => confirmDelete()} />
-      {Object.entries(car).map((item, index) => {
+      {Object.entries(profile).map((item, index) => {
         return (
           <View style={styles.row} key={index}>
-            {/*Vores car keys navn*/}
+            {/*Vores profile keys navn*/}
             <Text style={styles.label}>{item[0]} </Text>
-            {/*Vores car values navne */}
+            {/*Vores profile values navne */}
             <Text style={styles.value}>{item[1]}</Text>
           </View>
         );
@@ -82,7 +82,7 @@ const CarDetails = ({ route, navigation }) => {
   );
 };
 
-export default CarDetails;
+export default ProfileDetails;
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: "flex-start" },
