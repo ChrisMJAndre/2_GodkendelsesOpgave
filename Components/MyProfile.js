@@ -10,8 +10,14 @@ const MyProfile = (props) => {
       <Text> Nationality: Sweden/China </Text>
       <Text> Study: Ha(it). </Text>
 
+      <Text style={styles.Top}>Notes: </Text>
+      <Text style={styles.Top}>
+        In the future you will have the ability to upload your own profile
+        picture, this is just a placehold
+      </Text>
+
       <Image
-        style={styles.tinyLogo}
+        style={styles.Image}
         source={{ uri: "https://picsum.photos/200/300" }}
       />
     </View>
@@ -21,17 +27,13 @@ const MyProfile = (props) => {
 export default MyProfile;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-  },
-  tinyLogo: {
+  Image: {
     top: 100,
     width: 200,
     height: 300,
     alignSelf: "center",
   },
-  logo: {
-    width: 66,
-    height: 58,
+  Top: {
+    top: 50,
   },
 });
